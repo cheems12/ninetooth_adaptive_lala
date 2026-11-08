@@ -5,6 +5,7 @@
 - `_infinilm_producer_sync_trace.so`：带同步诊断的 InfiniLM 扩展。
 - `mha_ninetoothed_hygon.so`：九齿注意力算子适配插件。
 - `mha_full.so`、`mha72.so`：插件依赖的九齿生成的注意力内核库。
+- `infinicore-runtime-gfx936-20261108.tar.gz`：平台已有 InfiniCore Python 扩展和运行库。
 - `SHA256SUMS`：文件完整性校验值。在本目录运行 `sha256sum -c SHA256SUMS` 可检查。
 
 这些是平台相关的 Linux 二进制文件，需要兼容的海光设备、驱动、运行时及对应版本的 InfiniCore 和 InfiniLM，不能单独构成完整运行环境。插件的运行时搜索路径包含原环境路径；迁移时需要配置实际依赖库的搜索路径，例如在加载前将本目录及 InfiniCore 库目录加入 `LD_LIBRARY_PATH`。应结合 `ldd` 检查缺失依赖。
