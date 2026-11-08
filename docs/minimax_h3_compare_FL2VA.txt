@@ -1,0 +1,8 @@
+[result] MiniMax-H3 video comparison
+
+  FL2VA
+    Size:         PASS (PyTorch 768x928, InfiniLM 768x928)
+    Length:       PASS (PyTorch 124 frames, InfiniLM 124 frames)
+    Average SSIM: 96.774%
+
+Compared existing reference and candidate videos using the repository comparison script.

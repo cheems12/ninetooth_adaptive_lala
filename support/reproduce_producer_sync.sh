@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -eo pipefail
+: "${IFAB_AFS_HOME:?IFAB_AFS_HOME must be set}"
+source "$IFAB_AFS_HOME/h3-diagnosis-nov7/restore_env.sh"
+project="$IFAB_AFS_HOME/h3-work/InfiniLM"
+run_python="$TMPDIR/h3-reproduce-python"
+mkdir -p "$run_python"
+cp -a "$project/python/infinilm" "$run_python/"
+cp "$IFAB_AFS_HOME/h3-build-support/_infinilm_producer_sync_trace.so" "$run_python/infinilm/lib/_infinilm.so"
+export PYTHONPATH="$run_python:$PYTHONPATH"
+export LD_PRELOAD="$IFAB_AFS_HOME/h3-build-support/mha_ninetoothed_hygon.so"
+output_dir="$IFAB_AFS_HOME/outputs/reproduce-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$output_dir"
+cd "$project"
+python -u examples/minimax_h3.py fl2va --model-path=/public/home/aclsylqidf/shared/MiniMax-H3/diffusers --text='A dog falls asleep' --gpus=0,1,2,3,4,5,6,7 --steps=50 --seed=42 --num-frames=124 --output="$output_dir/infinilm_fl2va.mp4" --first-frame="$IFAB_AFS_HOME/Golde33443.jpg" 2>&1 | tee "$output_dir/run.log"
