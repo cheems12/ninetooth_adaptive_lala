@@ -71,7 +71,7 @@ with tarfile.open(sys.argv[1]) as archive:
 PY
     export PYTHONPATH="$WORK/vision${PYTHONPATH:+:$PYTHONPATH}"
 fi
-if [[ -f "$ROOT/third_party/diffusers-source.zip" ]]; then
+if [[ -z ${FL2VA_ENV:-} && -f "$ROOT/third_party/diffusers-source.zip" ]]; then
     python - "$ROOT/third_party/diffusers-source.zip" "$WORK/diffusers" <<'PY'
 import sys, zipfile
 with zipfile.ZipFile(sys.argv[1]) as archive:
